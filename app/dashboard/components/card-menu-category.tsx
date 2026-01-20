@@ -27,6 +27,7 @@ export function MenuCategory() {
       const response = await fetch("/api/categories");
       const data = await response.json();
       setCategories(data);
+      console.log("Fetch! Kategori!");
       // Set kategori pertama sebagai aktif
       if (data.length > 0) {
         setActiveCategory(data[0].name);
