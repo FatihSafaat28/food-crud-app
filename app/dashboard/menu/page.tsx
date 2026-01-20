@@ -1,16 +1,22 @@
-import { MenuCategory } from "../components/card-menu-category";
-import { MenuItems } from "../components/card-menu-items";
+"use client";
+
+import { useState } from "react";
+import { MenuCategory } from "./components/category-components/card-menu-category";
+import { MenuItems } from "./components/menu-item-components/card-menu-items";
 
 export default function Menu() {
+  const [activeCategory, setActiveCategory] = useState("");
+
   return (
-    <div className="p-4 lg:p-6">
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4 items-end">
-          <MenuCategory />
-        </div>
-        <div className="flex flex-col gap-4 items-end">
-          <MenuItems />
-        </div>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4 items-end">
+        <MenuCategory
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+        />
+      </div>
+      <div className="flex flex-col gap-4 items-end">
+        <MenuItems activeCategory={activeCategory} />
       </div>
     </div>
   );

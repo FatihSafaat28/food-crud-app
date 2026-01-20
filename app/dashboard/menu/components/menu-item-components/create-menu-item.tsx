@@ -174,7 +174,15 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
           </Button>
           <Button
             onClick={handleSave}
-            disabled={loading || !name || !price || !categoryId}
+            disabled={
+              loading ||
+              !name ||
+              !price ||
+              !categoryId ||
+              !imageFile ||
+              !ingredients ||
+              !description
+            }
           >
             {loading ? (
               <Loader2 className="animate-spin mr-2 h-4 w-4" />

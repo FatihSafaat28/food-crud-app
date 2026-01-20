@@ -3,9 +3,10 @@
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { CreateMenuDialog } from "./menu-item-components/create-menu-item";
-import { Trash2 } from "lucide-react";
-import { EditMenuDialog } from "./menu-item-components/edit-menu-items";
+import Link from "next/link";
+import { CreateMenuDialog } from "./create-menu-item";
+import { Trash2, ArrowRight } from "lucide-react";
+import { EditMenuDialog } from "./edit-menu-items";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,7 +18,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export function MenuItems() {
+export function MenuItems({ activeCategory }: { activeCategory: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [menuData, setMenuData] = useState<any[]>([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -82,6 +83,11 @@ export function MenuItems() {
     }
   };
 
+  // Filter menu berdasarkan kategori aktif
+  const filteredMenu = menuData.filter(
+    (item) => !activeCategory || item.category?.name === activeCategory,
+  );
+
   return (
     <>
       <div className="mb-6">
@@ -89,7 +95,7 @@ export function MenuItems() {
       </div>
 
       <div className="flex gap-4 w-full px-6 py-4 border rounded-4xl flex-wrap">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full">
           {isLoading ? (
             // Skeleton Loader
             Array.from({ length: 5 }).map((_, index) => (
@@ -111,14 +117,18 @@ export function MenuItems() {
             <div className="col-span-full flex items-center justify-center text-muted-foreground min-h-50">
               Belum ada menu. Klik "Add Menu" untuk membuat menu pertama.
             </div>
+          ) : filteredMenu.length === 0 ? (
+            <div className="col-span-full flex items-center justify-center text-muted-foreground min-h-50">
+              Tidak ada menu di kategori "{activeCategory}".
+            </div>
           ) : (
-            menuData.map((item) => (
+            filteredMenu.map((item) => (
               <Card
                 key={item.id}
                 className="flex flex-col overflow-hidden h-full group"
               >
                 {/* Image Container */}
-                <div className="relative h-32 w-full overflow-hidden">
+                <div className="relative h-48 md:h-32 w-full overflow-hidden">
                   <img
                     src={item.imageUrl}
                     alt={item.name}
@@ -140,7 +150,18 @@ export function MenuItems() {
                 </CardHeader>
 
                 <CardFooter className="flex flex-col items-center justify-between mt-auto border-t pt-2 gap-2">
-                  <div className="flex gap-2 w-full">
+                  <Button
+                    asChild
+                    variant="default"
+                    size="sm"
+                    className="w-full gap-2"
+                  >
+                    <Link href={`/dashboard/menu/${item.id}`}>
+                      Details
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  </Button>
+                  <div className="flex gap-2 w-full flex-wrap">
                     <EditMenuDialog item={item} onRefresh={fetchMenus} />
                     <Button
                       variant="destructive"
