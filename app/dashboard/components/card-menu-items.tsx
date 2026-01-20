@@ -10,7 +10,7 @@ export function MenuItems() {
 
   return (
     <>
-      <Button variant="outline" size="sm" className="w-fit">
+      <Button variant="default" size="sm" className="w-fit">
         <PlusIcon />
         <span className="hidden lg:inline">Add Menu Item</span>
       </Button>
@@ -60,7 +60,7 @@ export function MenuItems() {
                 </CardHeader>
                 <CardFooter className="flex flex-col items-center justify-between mt-auto border-t pt-2 gap-2">
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
+                    <Button variant="default" size="sm">
                       Edit
                     </Button>
                     <Button variant="destructive" size="sm">

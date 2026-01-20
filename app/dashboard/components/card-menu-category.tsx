@@ -1,35 +1,53 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-import { PlusIcon } from "lucide-react";
-import { useState } from "react";
+import CreateCategory from "./category-components/create-category";
+import { ManageCategoryDialog } from "./category-components/edit-category";
 
-const categories = [
-  "Semua Kategori",
-  "Steak",
-  "Bread",
-  "Rice",
-  "Noodles",
-  "Meat",
-  "Fish",
-  "Tea",
-  "Coffee",
-  "Milk",
-  "Alcohol",
-];
+interface Category {
+  id: number;
+  name: string;
+  _count?: {
+    menus: number;
+  };
+}
 
 export function MenuCategory() {
   const [activeCategory, setActiveCategory] = useState("Steak");
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/categories");
+      const data = await response.json();
+      setCategories(data);
+      // Set kategori pertama sebagai aktif
+      if (data.length > 0) {
+        setActiveCategory(data[0].name);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
-      <Button variant="outline" size="sm" className="w-fit">
-        <PlusIcon />
-        <span className="hidden lg:inline">Add Menu Category</span>
-      </Button>
+      <div className="flex gap-4">
+        <ManageCategoryDialog
+          categories={categories}
+          fetchCategories={fetchCategories}
+        />
+        <CreateCategory fetchCategories={fetchCategories} />
+      </div>
+
       <div className="flex gap-4 w-full px-6 py-4 border rounded-4xl flex-wrap">
         {isLoading ? (
           Array.from({ length: 5 }).map((_, index) => (
@@ -45,15 +63,15 @@ export function MenuCategory() {
         ) : (
           categories.map((category) => (
             <Card
-              key={category}
+              key={category.id}
               className={`w-fit px-6 py-2 cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground ${
-                activeCategory === category
+                activeCategory === category.name
                   ? "bg-primary text-primary-foreground hover:bg-primary/90"
                   : ""
               }`}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => setActiveCategory(category.name)}
             >
-              <span className="font-medium text-sm">{category}</span>
+              <span className="font-medium text-sm">{category.name}</span>
             </Card>
           ))
         )}
