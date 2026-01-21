@@ -52,7 +52,11 @@ export default function CreateCategory({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" size="sm" className="flex gap-2">
+        <Button
+          variant="default"
+          size="sm"
+          className="flex gap-2 cursor-pointer"
+        >
           <PlusIcon className="h-4 w-4" />
           <span className="hidden lg:inline">Add Menu Category</span>
         </Button>

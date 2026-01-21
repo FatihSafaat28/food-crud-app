@@ -10,7 +10,7 @@ export function ButtonBack() {
     <Button
       variant="ghost"
       onClick={() => router.back()}
-      className="gap-2 pl-0"
+      className="px-4 gap-2 cursor-pointer"
     >
       <ArrowLeft className="h-4 w-4" /> Kembali
     </Button>

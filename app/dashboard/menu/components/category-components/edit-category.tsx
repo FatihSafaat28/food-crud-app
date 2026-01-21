@@ -87,7 +87,7 @@ export function ManageCategoryDialog({
       {/* --- DIALOG UTAMA: PILIH KATEGORI --- */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm" className="gap-2">
+          <Button variant="outline" size="sm" className="gap-2 cursor-pointer">
             <Settings2 className="h-4 w-4" /> Manage Categories
           </Button>
         </DialogTrigger>

@@ -2,6 +2,11 @@
 
 Aplikasi manajemen menu makanan menggunakan Next.js, Prisma, dan Supabase.
 
+## Login / Register response dengan bantuan API Reqres
+
+    Email : lindsay.ferguson@reqres.in
+    Password : [apa saja]
+
 ## Cara Menjalankan Aplikasi (Untuk Mentor/Developer Lain)
 
 Ikuti langkah-langkah berikut setelah melakukan clone repository:
@@ -62,8 +67,3 @@ Agar fitur upload gambar berfungsi:
 ```bash
 npm run dev
 ```
-
-### 6. Login / Register dengan API Reqres
-
-    Email : lindsay.ferguson@reqres.in
-    Password : [apa saja]

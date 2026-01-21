@@ -92,7 +92,7 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2">
+        <Button className="gap-2 cursor-pointer">
           <Plus className="h-4 w-4" /> Add Menu
         </Button>
       </DialogTrigger>

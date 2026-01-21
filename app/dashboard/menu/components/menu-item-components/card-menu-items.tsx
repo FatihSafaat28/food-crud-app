@@ -90,7 +90,7 @@ export function MenuItems({ activeCategory }: { activeCategory: string }) {
 
   return (
     <>
-      <div className="mb-6">
+      <div>
         <CreateMenuDialog onRefresh={fetchMenus} />
       </div>
 
@@ -166,7 +166,7 @@ export function MenuItems({ activeCategory }: { activeCategory: string }) {
                     <Button
                       variant="destructive"
                       size="sm"
-                      className="flex-1 gap-1"
+                      className="flex-1 gap-1 cursor-pointer"
                       onClick={() => {
                         setItemToDelete(item);
                         setIsDeleteDialogOpen(true);

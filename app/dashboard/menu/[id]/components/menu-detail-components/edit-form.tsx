@@ -185,7 +185,7 @@ export function EditForm({ menuId, onUpdate }: EditFormProps) {
           <div className="space-y-2">
             <Label>Kategori</Label>
             <Select value={categoryId} onValueChange={setCategoryId}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full cursor-pointer">
                 <SelectValue placeholder="Pilih Kategori" />
               </SelectTrigger>
               <SelectContent>
@@ -203,6 +203,7 @@ export function EditForm({ menuId, onUpdate }: EditFormProps) {
               type="file"
               accept="image/*"
               onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+              className="file:bg-secondary file:text-secondary-foreground file:border-0 file:border-r file:border-solid file:border-input file:mr-4 file:px-4 file:h-full cursor-pointer p-0 overflow-hidden"
             />
           </div>
         </div>
@@ -227,7 +228,7 @@ export function EditForm({ menuId, onUpdate }: EditFormProps) {
 
         <div className="flex gap-4 pt-4">
           <Button
-            className="flex-1"
+            className="flex-1 cursor-pointer"
             onClick={() => setIsEditAlertOpen(true)}
             disabled={isProcessing}
           >
@@ -235,7 +236,7 @@ export function EditForm({ menuId, onUpdate }: EditFormProps) {
           </Button>
           <Button
             variant="destructive"
-            className="flex-1"
+            className="flex-1 cursor-pointer"
             onClick={() => setIsDeleteAlertOpen(true)}
             disabled={isProcessing}
           >

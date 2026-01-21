@@ -16,6 +16,12 @@ export function MenuDetail({ menuId }: { menuId: string }) {
         const res = await fetch(`/api/menus/${menuId}`);
         if (!res.ok) throw new Error("Menu not found");
         const data = await res.json();
+        if (data?.name) {
+          // Kirim event ke window agar didengar oleh Breadcrumb di Header
+          window.dispatchEvent(
+            new CustomEvent("set-breadcrumb", { detail: data.name }),
+          );
+        }
         setMenu(data);
       } catch (error) {
         console.error(error);

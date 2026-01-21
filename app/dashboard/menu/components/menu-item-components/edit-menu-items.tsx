@@ -110,7 +110,11 @@ export function EditMenuDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="flex-1 gap-1">
+        <Button
+          variant="outline"
+          size="sm"
+          className="flex-1 cursor-pointer gap-1"
+        >
           <Edit className="h-3 w-3" /> Edit
         </Button>
       </DialogTrigger>
