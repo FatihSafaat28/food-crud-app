@@ -10,17 +10,20 @@ import {
 } from "@/components/ui/sidebar";
 import { NavUser } from "./nav-user";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-};
+interface User {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
+}
+interface AppSidebarProps {
+  user: User;
+}
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user }: AppSidebarProps) {
   return (
-    <Sidebar collapsible="offExamples" {...props}>
+    <Sidebar>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -29,7 +32,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
               <a href="#">
-                {/* <IconInnerShadowTop className="!size-5" /> */}
                 <span className="text-base font-semibold">Acme Inc.</span>
               </a>
             </SidebarMenuButton>
@@ -38,7 +40,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>{/* MENU CONTENT */}</SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );
