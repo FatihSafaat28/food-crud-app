@@ -62,3 +62,8 @@ Agar fitur upload gambar berfungsi:
 ```bash
 npm run dev
 ```
+
+### 6. Login / Register dengan API Reqres
+
+    Email : lindsay.ferguson@reqres.in
+    Password : [apa saja]
