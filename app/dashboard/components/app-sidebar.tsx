@@ -13,16 +13,6 @@ import { LucideLayoutDashboard } from "lucide-react";
 import { NavMain } from "./nav-main";
 import { Menu } from "lucide-react";
 
-interface User {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-}
-interface AppSidebarProps {
-  user: User;
-}
 
 const navMain = {
   title: "Menu",
@@ -30,7 +20,7 @@ const navMain = {
   icon: Menu,
 };
 
-export function AppSidebar({ user }: AppSidebarProps) {
+export function AppSidebar() {
   return (
     <Sidebar variant="inset">
       <SidebarHeader>
@@ -53,7 +43,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
         <NavMain items={[navMain]} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

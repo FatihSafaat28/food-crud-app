@@ -17,22 +17,22 @@ import {
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 
-interface AppSidebarProps {
-  user: {
-    id: number;
-    email: string;
-    first_name: string;
-    last_name: string;
-    avatar: string;
-  };
-}
-export function NavUser({ user }: AppSidebarProps) {
+import { signOut, useSession } from "next-auth/react";
+
+export function NavUser() {
   const { isMobile } = useSidebar();
   const router = useRouter();
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userEmail");
-    router.replace("/");
+  const session = useSession();
+  const handleLogout = async () => {
+    try {
+      await signOut({
+        callbackUrl: "/",
+        redirect: true,
+      });
+    } catch (error) {
+      console.error("Error signing out:", error);
+      alert("An error occurred while signing out.");
+    }
   };
   return (
     <SidebarMenu>
@@ -44,13 +44,13 @@ export function NavUser({ user }: AppSidebarProps) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar} alt={user.first_name} />
+                <AvatarImage src={session.data?.user?.image || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt={session.data?.user?.name || "dummy-photo"} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.first_name}</span>
+                <span className="truncate font-medium">{session.data?.user?.name}</span>
                 <span className="opacity-60 truncate text-xs">
-                  {user.email}
+                  {session.data?.user?.email}
                 </span>
               </div>
               <EllipsisVertical className="ml-auto size-4" />
@@ -65,15 +65,15 @@ export function NavUser({ user }: AppSidebarProps) {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.first_name} />
+                  <AvatarImage src={session.data?.user?.image || ""} alt={session.data?.user?.name || ""} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {user.first_name}
+                    {session.data?.user?.name}
                   </span>
                   <span className="text-muted-foreground truncate text-xs">
-                    {user.email}
+                    {session.data?.user?.email}
                   </span>
                 </div>
               </div>

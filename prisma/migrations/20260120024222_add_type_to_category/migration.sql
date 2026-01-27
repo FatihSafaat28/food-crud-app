@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE "Category" ADD COLUMN     "type" TEXT NOT NULL DEFAULT 'makanan';
+ALTER TABLE "Category" ADD COLUMN     "type" TEXT NOT NULL DEFAULT 'Makanan';
