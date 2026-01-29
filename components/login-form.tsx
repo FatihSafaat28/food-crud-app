@@ -13,6 +13,8 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getSession, signIn } from "next-auth/react";
+import { Spinner } from "@/components/ui/spinner";
 
 export function LoginForm({
   isLogin,
@@ -25,58 +27,59 @@ export function LoginForm({
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState<any>({ email: "", password: "" });
   const [registerData, setRegisterData] = useState<any>({
+    name:"",
     email: "",
     password: "",
   });
   const [open, setOpen] = useState<any>({ isOpen: false, isSuccess: false });
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState(false)
 
   const submitLogin = async () => {
+    setLoading(true);
     try {
       const payloadLogin = {
         email: loginData.email,
         password: loginData.password,
       };
-      const headers = {
-        "Content-Type": "application/json",
-        "x-api-key": "reqres_746dd67bd84f4cab98b82566173afb71",
-      };
-      const response = await fetch("https://reqres.in/api/login", {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(payloadLogin),
-      });
-      const data = await response.json();
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userEmail", loginData.email);
+      const result = await signIn("credentials", { ...payloadLogin, redirect: false });
+      console.log({...payloadLogin})
+      if (!result?.error) {
+        await getSession();
         setOpen({ isOpen: true, isSuccess: true });
       } else {
+        console.log(result);
+        setError("Password atau Email Salah");
         setOpen({ isOpen: true, isSuccess: false });
       }
-      console.log("login = ", data);
     } catch (error) {
       console.error("Login error:", error);
       setOpen({ isOpen: true, isSuccess: false });
+    } finally{
+      setLoading(false);
     }
   };
 
   const submitRegister = async () => {
+    setLoading(true);
     try {
       const payloadRegister = {
+        name: registerData.name,
         email: registerData.email,
         password: registerData.password,
       };
-      const headers = {
-        "Content-Type": "application/json",
-        "x-api-key": "reqres_746dd67bd84f4cab98b82566173afb71",
-      };
-      const response = await fetch("https://reqres.in/api/register", {
-        method: "POST",
-        headers: headers,
+      console.log("payloadRegister : ", payloadRegister);
+      const response = await fetch("/api/auth/register", {
+        method:"POST",
+        headers : {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payloadRegister),
       });
       const data = await response.json();
-      if (data.token) {
+
+
+      if (data.status === 201) {
         setOpen({ isOpen: true, isSuccess: true });
       } else {
         setOpen({ isOpen: true, isSuccess: false });
@@ -85,11 +88,31 @@ export function LoginForm({
     } catch (error) {
       console.error("Register error:", error);
       setOpen({ isOpen: true, isSuccess: false });
+    } finally{
+      setLoading(false)
     }
   };
 
   return (
     <>
+    {isLogin === "Sign up" ? (<></>) : (
+      <Field>
+        <FieldLabel className="dark:text-white" htmlFor="name">
+          Nama
+        </FieldLabel>
+        <Input
+          className="dark:text-white"
+          id="name"
+          type="text"
+          placeholder="lindsay.ferguson@reqres.in"
+          value={registerData.name}
+          onChange={(e: any) => {
+            setRegisterData({ ...registerData, name: e.target.value });
+          }}
+          required
+        />
+      </Field>
+    )}
       <Field>
         <FieldLabel className="dark:text-white" htmlFor="email">
           Email
@@ -147,7 +170,13 @@ export function LoginForm({
           type="button"
           onClick={isLogin === "Sign up" ? submitLogin : submitRegister}
         >
-          {isLogin === "Sign up" ? "Login" : "Register"}
+          {loading ? (
+            <Spinner/>
+          ) : isLogin === "Sign up" ? (
+            "Login"
+          ) : (
+            "Register"
+          )}
         </Button>
       </Field>
       <AlertDialog
@@ -179,17 +208,13 @@ export function LoginForm({
                   {
                     if (isLogin === "Sign up") {
                       router.push("/dashboard/menu");
+                      router.refresh();
                     } else {
                       handleLogin();
                       setRegisterData({ email: "", password: "" });
                     }
                   }
                 } else {
-                  if (isLogin === "Sign up") {
-                    setLoginData({ email: "", password: "" });
-                  } else {
-                    setRegisterData({ email: "", password: "" });
-                  }
                   setOpen({ ...open, isOpen: false });
                 }
               }}
