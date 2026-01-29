@@ -104,7 +104,7 @@ export function LoginForm({
           className="dark:text-white"
           id="name"
           type="text"
-          placeholder="lindsay.ferguson@reqres.in"
+          placeholder="your name"
           value={registerData.name}
           onChange={(e: any) => {
             setRegisterData({ ...registerData, name: e.target.value });
