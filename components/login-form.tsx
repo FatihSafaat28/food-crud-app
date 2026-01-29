@@ -121,7 +121,7 @@ export function LoginForm({
           className="dark:text-white"
           id="email"
           type="email"
-          placeholder="lindsay.ferguson@reqres.in"
+          placeholder="example@mail.com"
           value={isLogin === "Sign up" ? loginData.email : registerData.email}
           onChange={(e: any) => {
             if (isLogin === "Sign up") {
@@ -142,7 +142,7 @@ export function LoginForm({
             className="dark:text-white"
             id="password"
             type={showPassword ? "text" : "password"}
-            placeholder="password apa saja"
+            placeholder="your password"
             value={
               isLogin === "Sign up" ? loginData.password : registerData.password
             }
