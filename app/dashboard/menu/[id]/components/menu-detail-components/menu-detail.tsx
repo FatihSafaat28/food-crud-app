@@ -1,38 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Badge } from "@/app/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { MenuNotFound } from "./menu-not-found";
+import { useMenuDetail } from "@/hooks/use-menu-detail";
 
 export function MenuDetail({ menuId }: { menuId: string }) {
-  const [menu, setMenu] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch(`/api/menus/${menuId}`);
-        if (!res.ok) throw new Error("Menu not found");
-        const data = await res.json();
-        if (data?.name) {
-          // Kirim event ke window agar didengar oleh Breadcrumb di Header
-          window.dispatchEvent(
-            new CustomEvent("set-breadcrumb", { detail: data.name }),
-          );
-        }
-        setMenu(data);
-      } catch (error) {
-        console.error(error);
-        setMenu(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (menuId) fetchMenu();
-  }, [menuId]);
+  const { menu, isLoading } = useMenuDetail(menuId);
 
   if (isLoading) {
     return (
@@ -94,3 +68,4 @@ export function MenuDetail({ menuId }: { menuId: string }) {
     </div>
   );
 }
+

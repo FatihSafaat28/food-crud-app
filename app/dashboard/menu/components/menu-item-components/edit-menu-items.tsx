@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Edit, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from "@/app/components/ui/dialog";
 import { Input } from "@/app/components/ui/input";
@@ -21,68 +20,56 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select";
-import { uploadMenuImage } from "@/app/lib/supabase-upload";
+import { uploadMenuImage, deleteMenuImage } from "@/app/lib/supabase-upload";
+import { useCategories } from "@/hooks/use-categories";
+import { Menu } from "@/app/types";
+
+interface EditMenuDialogProps {
+  item: Menu;
+  onRefresh: () => void;
+  onClose?: () => void;
+}
 
 export function EditMenuDialog({
   item,
   onRefresh,
-}: {
-  item: any;
-  onRefresh: () => void;
-}) {
-  const [open, setOpen] = useState(false);
+  onClose,
+}: EditMenuDialogProps) {
+  const [open, setOpen] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
+  const { categories } = useCategories();
 
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(item.price.toString());
   const [categoryId, setCategoryId] = useState(item.categoryId.toString());
   const [description, setDescription] = useState(item.description || "");
   const [ingredients, setIngredients] = useState(
-    item.ingredients?.join(", ") || "",
+    item.ingredients?.join(", ") || ""
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
-  useEffect(() => {
-    if (open) {
-      fetch("/api/categories")
-        .then((res) => res.json())
-        .then(setCategories);
-    }
-  }, [open]);
+
+  const handleClose = () => {
+    setOpen(false);
+    onClose?.();
+  };
 
   const handleUpdate = async () => {
-    const { createClient } = await import("@supabase/supabase-js");
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    );
     setLoading(true);
     try {
       let finalImageUrl = item.imageUrl;
 
-      // 1. Jika ada file baru yang dipilih
+      // 1. If new image file is selected
       if (imageFile) {
-        // Upload foto baru
+        // Upload new image
         finalImageUrl = await uploadMenuImage(imageFile);
 
-        // 2. Hapus foto lama dari Storage (Hanya jika upload berhasil)
+        // 2. Delete old image from storage (only if upload succeeds)
         if (item.imageUrl) {
-          const oldFileName = item.imageUrl.split("/").pop();
-          if (oldFileName) {
-            const { error: deleteError } = await supabase.storage
-              .from("menu-images")
-              .remove([oldFileName]);
-
-            if (deleteError) {
-              console.error("Gagal menghapus foto lama:", deleteError.message);
-            } else {
-              console.log("Foto lama berhasil dibersihkan");
-            }
-          }
+          await deleteMenuImage(item.imageUrl);
         }
       }
 
-      // 3. Update data ke API
+      // 3. Update data via API
       const res = await fetch(`/api/menus/${item.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -97,7 +84,7 @@ export function EditMenuDialog({
       });
 
       if (res.ok) {
-        setOpen(false);
+        handleClose();
         onRefresh();
       }
     } catch (error) {
@@ -108,16 +95,7 @@ export function EditMenuDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="flex-1 cursor-pointer gap-1"
-        >
-          <Edit className="h-3 w-3" /> Edit
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
           <DialogTitle>Edit Menu</DialogTitle>
@@ -188,3 +166,4 @@ export function EditMenuDialog({
     </Dialog>
   );
 }
+

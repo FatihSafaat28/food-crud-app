@@ -2,8 +2,6 @@
 import { SidebarProvider, SidebarInset } from "@/app/components/ui/sidebar";
 import { AppSidebar } from "./components/app-sidebar";
 import { SiteHeader } from "./components/site-header";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export default function LayoutDashboard({
   children,

@@ -17,10 +17,10 @@ import { getSession, signIn } from "next-auth/react";
 import { Spinner } from "@/app/components/ui/spinner";
 
 export function LoginForm({
-  isLogin,
+  isStatus,
   handleLogin,
 }: {
-  isLogin: string;
+  isStatus: string;
   handleLogin: () => void;
 }) {
   const router = useRouter();
@@ -93,9 +93,18 @@ export function LoginForm({
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isStatus === "login") {
+      submitLogin();
+    } else {
+      submitRegister();
+    }
+  };
+
   return (
-    <>
-    {isLogin === "Sign up" ? (<></>) : (
+    <form onSubmit={handleSubmit}>
+    {isStatus === "login" ? (<></>) : (
       <Field>
         <FieldLabel className="dark:text-white" htmlFor="name">
           Nama
@@ -122,9 +131,9 @@ export function LoginForm({
           id="email"
           type="email"
           placeholder="example@mail.com"
-          value={isLogin === "Sign up" ? loginData.email : registerData.email}
+          value={isStatus === "login" ? loginData.email : registerData.email}
           onChange={(e: any) => {
-            if (isLogin === "Sign up") {
+            if (isStatus === "login") {
               setLoginData({ ...loginData, email: e.target.value });
             } else {
               setRegisterData({ ...registerData, email: e.target.value });
@@ -144,10 +153,10 @@ export function LoginForm({
             type={showPassword ? "text" : "password"}
             placeholder="your password"
             value={
-              isLogin === "Sign up" ? loginData.password : registerData.password
+              isStatus === "login" ? loginData.password : registerData.password
             }
             onChange={(e: any) => {
-              if (isLogin === "Sign up") {
+              if (isStatus === "login") {
                 setLoginData({ ...loginData, password: e.target.value });
               } else {
                 setRegisterData({ ...registerData, password: e.target.value });
@@ -167,12 +176,11 @@ export function LoginForm({
       <Field>
         <Button
           className="cursor-pointer font-bold"
-          type="button"
-          onClick={isLogin === "Sign up" ? submitLogin : submitRegister}
+          type="submit"
         >
           {loading ? (
             <Spinner/>
-          ) : isLogin === "Sign up" ? (
+          ) : isStatus === "login" ? (
             "Login"
           ) : (
             "Register"
@@ -187,16 +195,16 @@ export function LoginForm({
           <AlertDialogHeader>
             <AlertDialogTitle>
               {open.isSuccess
-                ? `${isLogin === "Sign up" ? `Login` : `Register`} Success`
-                : `${isLogin === "Sign up" ? `Login` : `Register`} Failed`}
+                ? `${isStatus === "login" ? `Login` : `Register`} Success`
+                : `${isStatus === "login" ? `Login` : `Register`} Failed`}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {open.isSuccess
                 ? `Please press Continue to ${
-                    isLogin === "Sign up" ? `the homepage.` : `Sign-in`
+                    isStatus === "login" ? `the homepage.` : `Sign-in`
                   }`
                 : `${
-                    isLogin === "Sign up" ? `Sign-in` : `Sign-up`
+                    isStatus === "login" ? `Sign-in` : `Sign-up`
                   } failed. Your email or password is incorrect. Please try again.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -206,7 +214,7 @@ export function LoginForm({
               onClick={() => {
                 if (open.isSuccess) {
                   {
-                    if (isLogin === "Sign up") {
+                    if (isStatus === "login") {
                       router.push("/dashboard/menu");
                       router.refresh();
                     } else {
@@ -224,6 +232,6 @@ export function LoginForm({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </form>
   );
 }

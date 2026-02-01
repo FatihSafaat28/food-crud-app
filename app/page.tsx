@@ -4,19 +4,19 @@ import LoginLayout from "@/app/components/login-layout";
 import { useState } from "react";
 
 export default function Home() {
-  const [isLogin, setLogin] = useState("Sign up");
+  const [isStatus, setStatus] = useState("login");
   const handleLogin = () => {
-    if (isLogin === "Sign up") {
-      setLogin("Sign in");
+    if (isStatus === "login") {
+      setStatus("register");
     } else {
-      setLogin("Sign up");
+      setStatus("login");
     }
   };
   return (
-    <LoginLayout isLogin={isLogin}>
+    <LoginLayout isStatus={isStatus}>
       <div className="flex justify-center gap-1 text-gray-500">
         <span>
-          {isLogin === "Sign up"
+          {isStatus === "login"
             ? "Don't have an account?"
             : "Already have an account?"}
         </span>
@@ -24,18 +24,10 @@ export default function Home() {
           className="cursor-pointer hover:underline hover:text-black dark:hover:text-gray-200"
           onClick={handleLogin}
         >
-          {isLogin}
+          {isStatus === "login" ? "Sign up" : "Sign in"}
         </div>
       </div>
-      <LoginForm isLogin={isLogin} handleLogin={handleLogin} />
+      <LoginForm isStatus={isStatus} handleLogin={handleLogin} />
     </LoginLayout>
   );
 }
-
-//  Test Login
-//  Email : lindsay.ferguson@reqres.in
-//  Password : [apa saja]
-
-//  Test Register
-//  Email : lindsay.ferguson@reqres.in
-//  Password : [apa saja]

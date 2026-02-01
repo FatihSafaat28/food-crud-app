@@ -4,10 +4,10 @@ import React from "react";
 
 export default function LoginLayout({
   children,
-  isLogin,
+  isStatus,
 }: {
   children: React.ReactNode;
-  isLogin: string;
+  isStatus: string;
 }) {
   return (
     <main>
@@ -24,7 +24,7 @@ export default function LoginLayout({
                     <span className="sr-only">My Coffee</span>
                   </div>
                   <h1 className="text-xl font-bold dark:text-white">
-                    {isLogin === "Sign up"
+                    {isStatus === "login"
                       ? "Welcome to My Coffee"
                       : "Create your new account"}
                   </h1>

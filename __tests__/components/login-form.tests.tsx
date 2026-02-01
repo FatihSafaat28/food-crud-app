@@ -17,7 +17,7 @@ describe("LoginForm - Render fields and inputs", () => {
 
   describe(`Login mode`, () => {
     it(`should render email field label and input`, () => {
-      render(<LoginForm isLogin={"Sign up"} handleLogin={mockingHandleLogin} />);
+      render(<LoginForm isStatus={"Sign up"} handleLogin={mockingHandleLogin} />);
 
       // Check for email label
       const emailLabel = screen.getByText("Email");
@@ -32,7 +32,7 @@ describe("LoginForm - Render fields and inputs", () => {
     });
 
     it(`should render password field label and input`, () => {
-      render(<LoginForm isLogin={`Sign up`} handleLogin={mockingHandleLogin} />);
+      render(<LoginForm isStatus={`Sign up`} handleLogin={mockingHandleLogin} />);
 
       // Check for password label
       const passwordLabel = screen.getByText("Password");
@@ -48,7 +48,7 @@ describe("LoginForm - Render fields and inputs", () => {
 
   describe(`Register mode`, () => {
     it(`should render name field label and input`, () => {
-      render(<LoginForm isLogin={`Sign in`} handleLogin={mockingHandleLogin} />);
+      render(<LoginForm isStatus={`Sign in`} handleLogin={mockingHandleLogin} />);
 
       // Check for name label
       const nameLabel = screen.getByText("Nama");
@@ -61,7 +61,7 @@ describe("LoginForm - Render fields and inputs", () => {
       expect(nameInput).toHaveAttribute("id", "name");
     });
     it(`should render email field label and input`, () => {
-      render(<LoginForm isLogin={`Sign in`} handleLogin={mockingHandleLogin} />);
+      render(<LoginForm isStatus={`Sign in`} handleLogin={mockingHandleLogin} />);
 
       // Check for email label
       const emailLabel = screen.getByText("Email");
@@ -74,7 +74,7 @@ describe("LoginForm - Render fields and inputs", () => {
       expect(emailInput).toHaveAttribute("id", "email");
     });
     it(`should render password field label and input`, () => {
-      render(<LoginForm isLogin={`Sign in`} handleLogin={mockingHandleLogin} />);
+      render(<LoginForm isStatus={`Sign in`} handleLogin={mockingHandleLogin} />);
 
       // Check for password label
       const passwordLabel = screen.getByText("Password");

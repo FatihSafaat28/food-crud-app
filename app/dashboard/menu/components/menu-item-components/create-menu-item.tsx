@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Plus, Loader2, Upload } from "lucide-react";
+import { useState } from "react";
+import { Plus, Loader2 } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
@@ -22,11 +22,12 @@ import {
   SelectValue,
 } from "@/app/components/ui/select";
 import { uploadMenuImage } from "@/app/lib/supabase-upload";
+import { useCategories } from "@/hooks/use-categories";
 
 export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
+  const { categories } = useCategories();
 
   // Form State
   const [name, setName] = useState("");
@@ -36,24 +37,15 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
   const [ingredients, setIngredients] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  // Ambil data kategori untuk select
-  useEffect(() => {
-    if (open) {
-      fetch("/api/categories")
-        .then((res) => res.json())
-        .then((data) => setCategories(data));
-    }
-  }, [open]);
-
   const handleSave = async () => {
     if (!imageFile) return alert("Pilih gambar dulu!");
 
     setLoading(true);
     try {
-      // 1. Upload ke Supabase Storage
+      // 1. Upload to Supabase Storage
       const imageUrl = await uploadMenuImage(imageFile);
 
-      // 2. Simpan ke Database via API
+      // 2. Save to Database via API
       const res = await fetch("/api/menus", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -195,3 +187,4 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
     </Dialog>
   );
 }
+
