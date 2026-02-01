@@ -11,7 +11,13 @@ import { CreateMenuDialog } from "./create-menu-item";
 import { EditMenuDialog } from "./edit-menu-items";
 import { deleteMenuImage } from "@/app/lib/supabase-upload";
 
-export function MenuItems({ activeCategory }: { activeCategory: string }) {
+export function MenuItems({ 
+  activeCategory,
+  onMenuChange 
+}: { 
+  activeCategory: string;
+  onMenuChange?: () => void;
+}) {
   const { menus, isLoading, refetch } = useMenus();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<Menu | null>(null);
@@ -32,6 +38,10 @@ export function MenuItems({ activeCategory }: { activeCategory: string }) {
           await deleteMenuImage(itemToDelete.imageUrl);
         }
         refetch();
+        // Notify parent to update category counts
+        if (onMenuChange) {
+          onMenuChange();
+        }
       }
     } catch (error) {
       console.error("Error deleting menu:", error);
@@ -49,7 +59,14 @@ export function MenuItems({ activeCategory }: { activeCategory: string }) {
   return (
     <>
       <div>
-        <CreateMenuDialog onRefresh={refetch} />
+        <CreateMenuDialog 
+          onRefresh={() => {
+            refetch();
+            if (onMenuChange) {
+              onMenuChange();
+            }
+          }} 
+        />
       </div>
 
       <div className="flex gap-4 w-full px-6 py-4 border rounded-4xl flex-wrap">
@@ -82,7 +99,12 @@ export function MenuItems({ activeCategory }: { activeCategory: string }) {
       {editingItem && (
         <EditMenuDialog
           item={editingItem}
-          onRefresh={refetch}
+          onRefresh={() => {
+            refetch();
+            if (onMenuChange) {
+              onMenuChange();
+            }
+          }}
           onClose={() => setEditingItem(null)}
         />
       )}

@@ -11,11 +11,13 @@ import { EditCategory } from "./edit-category";
 interface MenuCategoryProps {
   activeCategory: string;
   setActiveCategory: (category: string) => void;
+  onRefetchReady?: (refetch: () => void) => void;
 }
 
 export function MenuCategory({
   activeCategory,
   setActiveCategory,
+  onRefetchReady,
 }: MenuCategoryProps) {
   const { categories, isLoading, refetch } = useCategories();
 
@@ -25,6 +27,13 @@ export function MenuCategory({
       setActiveCategory(categories[0].name);
     }
   }, [categories, activeCategory, setActiveCategory]);
+
+  // Expose refetch to parent
+  useEffect(() => {
+    if (onRefetchReady) {
+      onRefetchReady(refetch);
+    }
+  }, [refetch, onRefetchReady]);
 
   return (
     <>

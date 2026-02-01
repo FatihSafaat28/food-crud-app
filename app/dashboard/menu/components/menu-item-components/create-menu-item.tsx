@@ -163,7 +163,7 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
                 type="file"
                 accept="image/*"
                 onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-                className="cursor-pointer"
+                className="file:bg-secondary file:text-secondary-foreground file:border-0 file:border-r file:border-solid file:border-input file:mr-4 file:px-4 file:h-full cursor-pointer p-0 overflow-hidden"
               />
             </div>
           </div>
