@@ -17,8 +17,10 @@ import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
 
 export default function CreateCategory({
   fetchCategories,
+  onCategoryCreated,
 }: {
   fetchCategories: () => void;
+  onCategoryCreated?: (categoryName: string) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -38,15 +40,20 @@ export default function CreateCategory({
 
       if (res.ok) {
         console.log("Kategori berhasil ditambahkan :", name, type);
+        const createdCategoryName = name; // Save before reset
         setOpen(false); // Tutup dialog
         setName(""); // Reset input
         setType("");
+        fetchCategories(); // Refresh data
+        // Set the newly created category as active
+        if (onCategoryCreated) {
+          onCategoryCreated(createdCategoryName);
+        }
       }
     } catch (error) {
       console.error(error);
     } finally {
       setCreateCategoryLoading(false);
-      fetchCategories(); // Refresh data
     }
   };
   return (

@@ -33,14 +33,19 @@ export function MenuCategory({
           categories={categories}
           fetchCategories={refetch}
         />
-        <CreateCategory fetchCategories={refetch} />
+        <CreateCategory 
+          fetchCategories={refetch} 
+          onCategoryCreated={(categoryName) => setActiveCategory(categoryName)}
+        />
       </div>
 
       <div className="grid grid-cols-3 md:flex md:flex-wrap gap-4 w-full px-6 py-4 border rounded-4xl">
         {isLoading ? (
           <CategoryCardSkeleton count={5} />
         ) : categories.length === 0 ? (
-          <EmptyState message="Kategori Masih Kosong" />
+          <div className="col-span-3 w-full">
+            <EmptyState message="Kategori Masih Kosong" />
+          </div>
         ) : (
           categories.map((category) => (
             <CategoryCard

@@ -12,7 +12,7 @@ import { NavUser } from "./nav-user";
 import { LucideLayoutDashboard } from "lucide-react";
 import { NavMain } from "./nav-main";
 import { Menu } from "lucide-react";
-
+import { useSession } from "next-auth/react";
 
 const navMain = {
   title: "Menu",
@@ -21,6 +21,7 @@ const navMain = {
 };
 
 export function AppSidebar() {
+  const session = useSession();
   return (
     <Sidebar variant="inset">
       <SidebarHeader>
@@ -33,7 +34,7 @@ export function AppSidebar() {
             >
               <a href="#">
                 <LucideLayoutDashboard />
-                <span className="text-base font-semibold">Dashboard Fatih</span>
+                <span className="text-base font-semibold">Welcome, {session.data?.user?.name}</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

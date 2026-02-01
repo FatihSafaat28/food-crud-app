@@ -14,7 +14,6 @@ export default function LoginLayout({
       <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
         <div className="w-full max-w-sm">
           <div className="flex flex-col gap-6">
-            <form>
               <FieldGroup>
                 <div className="flex flex-col items-center gap-2 text-center">
                   <div className="flex flex-col items-center gap-2 font-medium">
@@ -31,7 +30,6 @@ export default function LoginLayout({
                 </div>
                 {children}
               </FieldGroup>
-            </form>
           </div>
         </div>
       </div>

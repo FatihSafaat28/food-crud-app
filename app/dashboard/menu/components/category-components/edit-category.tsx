@@ -91,12 +91,16 @@ export function EditCategory({
             <div className="space-y-2">
               <Label>Pilih Kategori</Label>
               <Select onValueChange={(val) => setSelectedId(val)}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full cursor-pointer">
                   <SelectValue placeholder="Pilih kategori yang ingin diubah..." />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((cat) => (
-                    <SelectItem key={cat.id} value={cat.id.toString()}>
+                    <SelectItem
+                      className="cursor-pointer"
+                      key={cat.id}
+                      value={cat.id.toString()}
+                    >
                       {cat.name} ({cat.type})
                     </SelectItem>
                   ))}
@@ -106,7 +110,7 @@ export function EditCategory({
 
             <div className="flex gap-2 pt-2">
               <Button
-                className="flex-1 gap-2"
+                className="flex-1 gap-2 cursor-pointer"
                 variant="default"
                 disabled={!selectedId}
                 onClick={() => {
@@ -117,7 +121,7 @@ export function EditCategory({
                 <Edit3 className="h-4 w-4" /> Edit
               </Button>
               <Button
-                className="flex-1 gap-2 text-destructive"
+                className="flex-1 gap-2 cursor-pointer text-destructive"
                 variant="outline"
                 disabled={!selectedId}
                 onClick={() => setIsDeleteDialogOpen(true)}

@@ -27,7 +27,7 @@ import { useCategories } from "@/hooks/use-categories";
 export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { categories } = useCategories();
+  const { categories, refetch } = useCategories();
 
   // Form State
   const [name, setName] = useState("");
@@ -81,8 +81,16 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
     setImageFile(null);
   };
 
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    // Refresh categories when dialog opens
+    if (isOpen) {
+      refetch();
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className="gap-2 cursor-pointer">
           <Plus className="h-4 w-4" /> Add Menu
@@ -116,7 +124,7 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
             <div className="grid gap-2">
               <Label>Kategori</Label>
               <Select onValueChange={setCategoryId}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full cursor-pointer">
                   <SelectValue placeholder="Pilih" />
                 </SelectTrigger>
                 <SelectContent>
@@ -134,6 +142,7 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
             <Label>Deskripsi</Label>
             <Textarea
               value={description}
+              placeholder="Nasi Goreng Komplit Enak!"
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
