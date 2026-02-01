@@ -6,7 +6,7 @@ import { CategoryCard } from "@/app/dashboard/menu/components/category-component
 import { CategoryCardSkeleton } from "@/app/components/ui/loading-skeleton";
 import { EmptyState } from "@/app/components/ui/empty-state";
 import CreateCategory from "./create-category";
-import { ManageCategoryDialog } from "./edit-category";
+import { EditCategory } from "./edit-category";
 
 interface MenuCategoryProps {
   activeCategory: string;
@@ -29,7 +29,7 @@ export function MenuCategory({
   return (
     <>
       <div className="flex gap-4">
-        <ManageCategoryDialog
+        <EditCategory
           categories={categories}
           fetchCategories={refetch}
         />

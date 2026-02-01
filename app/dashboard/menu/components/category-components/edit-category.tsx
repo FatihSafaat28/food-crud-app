@@ -18,21 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/app/components/ui/alert-dialog";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
+import { DeleteConfirmationDialog } from "../delete-confirmation-dialog";
 
-export function ManageCategoryDialog({
+export function EditCategory({
   categories,
   fetchCategories,
 }: {
@@ -190,31 +181,13 @@ export function ManageCategoryDialog({
       </Dialog>
 
       {/* --- DIALOG CABANG 2: DELETE CONFIRMATION --- */}
-      <AlertDialog
-        open={isDeleteDialogOpen}
+      <DeleteConfirmationDialog
+        isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
-      >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Anda yakin menghapus {selectedCategory?.name}?
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              Tindakan ini tidak bisa dibatalkan. Pastikan tidak ada menu yang
-              menggunakan kategori ini.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Batal</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              Ya, Hapus
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        onConfirm={handleDelete}
+        itemName={selectedCategory?.name}
+        description="Tindakan ini tidak bisa dibatalkan. Pastikan tidak ada menu yang menggunakan kategori ini."
+      />
     </>
   );
 }

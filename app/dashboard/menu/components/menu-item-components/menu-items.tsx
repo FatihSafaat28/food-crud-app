@@ -6,7 +6,7 @@ import { Menu } from "@/app/types";
 import { MenuCard } from "@/app/dashboard/menu/components/menu-item-components/menu-card";
 import { MenuCardSkeleton } from "@/app/components/ui/loading-skeleton";
 import { EmptyState } from "@/app/components/ui/empty-state";
-import { DeleteConfirmationDialog } from "@/app/components/ui/delete-confirmation-dialog";
+import { DeleteConfirmationDialog } from "@/app/dashboard/menu/components/delete-confirmation-dialog";
 import { CreateMenuDialog } from "./create-menu-item";
 import { EditMenuDialog } from "./edit-menu-items";
 import { deleteMenuImage } from "@/app/lib/supabase-upload";

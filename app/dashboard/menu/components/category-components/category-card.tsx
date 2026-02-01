@@ -9,9 +9,6 @@ interface CategoryCardProps {
   onClick: () => void;
 }
 
-/**
- * Reusable category card component
- */
 export function CategoryCard({ category, isActive, onClick }: CategoryCardProps) {
   return (
     <Card

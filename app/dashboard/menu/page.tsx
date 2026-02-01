@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { MenuCategory } from "./components/category-components/card-menu-category";
-import { MenuItems } from "./components/menu-item-components/card-menu-items";
+import { MenuCategory } from "./components/category-components/menu-category";
+import { MenuItems } from "./components/menu-item-components/menu-items";
 
 export default function Menu() {
   const [activeCategory, setActiveCategory] = useState("");
