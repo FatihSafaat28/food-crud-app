@@ -14,14 +14,21 @@ datasource db {
 }
 model Category {
   id        Int      @id @default(autoincrement())
-  name      String   @unique
+  name      String
   type      String   @default("Makanan")   // 'makanan', 'minuman', dll
+  
+  // Relasi ke User: Setiap kategori dimiliki oleh satu user
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   // Relasi: Satu kategori bisa punya banyak menu
   menus     Menu[]   
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  // Unique constraint: Nama kategori harus unik per user
+  @@unique([name, userId])
 }
 
 model Menu {
@@ -35,6 +42,10 @@ model Menu {
   
   // Array String untuk bahan-bahan (Fitur native PostgreSQL)
   ingredients String[] 
+  
+  // Relasi ke User: Setiap menu dimiliki oleh satu user
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   // Relasi ke Category
   categoryId  Int
@@ -77,6 +88,10 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  
+  // Relasi: User bisa punya banyak kategori dan menu
+  categories    Category[]
+  menus         Menu[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

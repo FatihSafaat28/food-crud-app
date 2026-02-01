@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Button } from "@/app/components/ui/button";
+import { Separator } from "@/app/components/ui/separator";
+import { SidebarTrigger } from "@/app/components/ui/sidebar";
 import { DynamicBreadcrumb } from "./dynamic-breadcrumb";
 export function SiteHeader() {
   return (

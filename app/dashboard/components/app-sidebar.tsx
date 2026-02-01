@@ -7,7 +7,7 @@ import {
   SidebarMenuButton,
   SidebarContent,
   SidebarFooter,
-} from "@/components/ui/sidebar";
+} from "@/app/components/ui/sidebar";
 import { NavUser } from "./nav-user";
 import { LucideLayoutDashboard } from "lucide-react";
 import { NavMain } from "./nav-main";

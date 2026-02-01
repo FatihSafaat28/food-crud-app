@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Button } from "@/app/components/ui/button";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { CreateMenuDialog } from "./create-menu-item";
@@ -16,7 +16,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from "@/app/components/ui/alert-dialog";
 
 export function MenuItems({ activeCategory }: { activeCategory: string }) {
   const [isLoading, setIsLoading] = useState(true);

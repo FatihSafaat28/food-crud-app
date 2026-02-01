@@ -1046,6 +1046,7 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   type: 'type',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1060,6 +1061,7 @@ export const MenuScalarFieldEnum = {
   price: 'price',
   imageUrl: 'imageUrl',
   ingredients: 'ingredients',
+  userId: 'userId',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

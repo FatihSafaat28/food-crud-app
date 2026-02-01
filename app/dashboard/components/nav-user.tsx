@@ -7,14 +7,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+} from "@/app/components/ui/dropdown-menu";
 import {
   useSidebar,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "@/components/ui/sidebar";
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
+} from "@/app/components/ui/sidebar";
+import { AvatarImage, AvatarFallback, Avatar } from "@/app/components/ui/avatar";
 import { useRouter } from "next/navigation";
 
 import { signOut, useSession } from "next-auth/react";

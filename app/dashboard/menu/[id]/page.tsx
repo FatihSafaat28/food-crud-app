@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/app/components/ui/card";
 import { MenuDetail } from "./components/menu-detail-components/menu-detail";
 import { EditForm } from "./components/menu-detail-components/edit-form";
 import { ButtonBack } from "./components/menu-detail-components/button-back";

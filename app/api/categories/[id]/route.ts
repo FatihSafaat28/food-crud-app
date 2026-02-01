@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
+import { auth } from "@/lib/auth";
 
 // 1. UPDATE KATEGORI (PATCH)
 export async function PATCH(
@@ -8,6 +9,15 @@ export async function PATCH(
 ) {
   const params = await props.params;
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+
     const body = await req.json();
     const { name, type } = body;
     const id = parseInt(params.id);
@@ -15,6 +25,18 @@ export async function PATCH(
     // Validasi ID
     if (isNaN(id)) {
       return NextResponse.json({ error: "ID tidak valid" }, { status: 400 });
+    }
+
+    // Verifikasi bahwa kategori milik user yang sedang login
+    const existingCategory = await prisma.category.findFirst({
+      where: { id, userId: session.user.id },
+    });
+
+    if (!existingCategory) {
+      return NextResponse.json(
+        { error: "Kategori tidak ditemukan atau Anda tidak memiliki akses" },
+        { status: 404 },
+      );
     }
 
     const updatedCategory = await prisma.category.update({
@@ -49,10 +71,31 @@ export async function DELETE(
 ) {
   const params = await props.params;
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+
     const id = parseInt(params.id);
 
     if (isNaN(id)) {
       return NextResponse.json({ error: "ID tidak valid" }, { status: 400 });
+    }
+
+    // Verifikasi bahwa kategori milik user yang sedang login
+    const existingCategory = await prisma.category.findFirst({
+      where: { id, userId: session.user.id },
+    });
+
+    if (!existingCategory) {
+      return NextResponse.json(
+        { error: "Kategori tidak ditemukan atau Anda tidak memiliki akses" },
+        { status: 404 },
+      );
     }
 
     await prisma.category.delete({
@@ -86,14 +129,24 @@ export async function GET(
 ) {
   const params = await props.params;
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+
     const id = parseInt(params.id);
 
     if (isNaN(id)) {
       return NextResponse.json({ error: "ID tidak valid" }, { status: 400 });
     }
 
-    const category = await prisma.category.findUnique({
-      where: { id },
+    // Hanya ambil kategori milik user yang sedang login
+    const category = await prisma.category.findFirst({
+      where: { id, userId: session.user.id },
       include: {
         _count: {
           select: { menus: true },

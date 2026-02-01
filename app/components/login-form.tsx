@@ -1,5 +1,5 @@
 import { Coffee, Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,13 +8,13 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+} from "@/app/components/ui/alert-dialog";
+import { Field, FieldLabel } from "@/app/components/ui/field";
+import { Input } from "@/app/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSession, signIn } from "next-auth/react";
-import { Spinner } from "@/components/ui/spinner";
+import { Spinner } from "@/app/components/ui/spinner";
 
 export function LoginForm({
   isLogin,

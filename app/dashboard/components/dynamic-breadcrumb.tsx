@@ -9,7 +9,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from "@/app/components/ui/breadcrumb";
 import { LayoutDashboard } from "lucide-react";
 
 export function DynamicBreadcrumb() {

@@ -1,6 +1,6 @@
 "use client";
-import { LoginForm } from "@/components/login-form";
-import LoginLayout from "@/components/login-layout";
+import { LoginForm } from "@/app/components/login-form";
+import LoginLayout from "@/app/components/login-layout";
 import { useState } from "react";
 
 export default function Home() {

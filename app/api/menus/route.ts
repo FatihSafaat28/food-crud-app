@@ -1,9 +1,21 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET() {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
     const menus = await prisma.menu.findMany({
+      where : {
+        userId: session.user.id,
+      },
       include: {
         category: true, // Mengambil data kategori terkait
       },
@@ -20,6 +32,15 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+
     const body = await req.json();
     const { name, description, price, imageUrl, ingredients, categoryId } =
       body;
@@ -40,6 +61,7 @@ export async function POST(req: Request) {
         imageUrl,
         ingredients: ingredients || [], // Menangani array string
         categoryId: parseInt(categoryId),
+        userId: session.user.id,
       },
     });
 

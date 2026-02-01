@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/app/components/ui/card";
 import CreateCategory from "./create-category";
 import { ManageCategoryDialog } from "./edit-category";
 

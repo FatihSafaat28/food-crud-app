@@ -1,4 +1,4 @@
-import { FieldGroup } from "@/components/ui/field";
+import { FieldGroup } from "@/app/components/ui/field";
 import { Coffee } from "lucide-react";
 import React from "react";
 

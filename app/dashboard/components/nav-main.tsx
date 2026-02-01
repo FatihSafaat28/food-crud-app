@@ -6,14 +6,14 @@ import {
   type Icon as LucideIcon,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/app/components/ui/sidebar";
 
 export function NavMain({
   items,

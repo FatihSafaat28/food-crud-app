@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/app/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { MenuNotFound } from "./menu-not-found";
 
