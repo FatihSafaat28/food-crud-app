@@ -1,20 +1,20 @@
-import LoginForm from "@/app/components/login-form";
+import RegisterForm from "@/app/components/register-form";
 import LoginLayout from "@/app/components/login-layout";
 import Link from "next/link";
 
-export default function Home() {
+export default function RegisterPage() {
   return (
-    <LoginLayout isStatus="login">
+    <LoginLayout isStatus="register">
       <div className="flex justify-center gap-1 text-gray-500">
-        <span>Don't have an account?</span>
+        <span>Already have an account?</span>
         <Link
-          href="/register"
+          href="/"
           className="cursor-pointer hover:underline hover:text-black dark:hover:text-gray-200"
         >
-          Sign up
+          Sign in
         </Link>
       </div>
-      <LoginForm />
+      <RegisterForm />
     </LoginLayout>
   );
 }
