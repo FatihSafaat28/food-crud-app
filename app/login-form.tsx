@@ -16,14 +16,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSession, signIn } from "next-auth/react";
 import { Spinner } from "@/app/components/ui/spinner";
+import { Eye, EyeOff} from "lucide-react";
 
-// Dynamic imports for icons to reduce initial bundle size
-const Eye = dynamic(() => import("lucide-react").then((mod) => mod.Eye), {
-  ssr: false,
-});
-const EyeOff = dynamic(() => import("lucide-react").then((mod) => mod.EyeOff), {
-  ssr: false,
-});
 
 export default function LoginForm() {
   const router = useRouter();
@@ -98,6 +92,8 @@ export default function LoginForm() {
             required
           />
           <Button
+            id="show-password-button"
+            data-testid="show-password-button"
             type="button"
             variant="ghost"
             onClick={() => setShowPassword(!showPassword)}

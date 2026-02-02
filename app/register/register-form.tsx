@@ -112,6 +112,8 @@ export default function RegisterForm() {
             required
           />
           <Button
+            id="show-password-button"
+            data-testid="show-password-button"
             type="button"
             variant="ghost"
             onClick={() => setShowPassword(!showPassword)}
