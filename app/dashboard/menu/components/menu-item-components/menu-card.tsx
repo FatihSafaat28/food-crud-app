@@ -21,14 +21,14 @@ export function MenuCard({ menu, onEdit, onDelete }: MenuCardProps) {
       {/* Image Container */}
       <div className="relative h-48 md:h-32 w-full overflow-hidden">
         <img
-          src={menu.imageUrl || "/placeholder-food.jpg"}
+          src={menu.imageUrl || "/fast-food.png"}
           alt={menu.name}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        {/* Badge Kategori
+        {/* Badge Kategori */}
         <div className="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded-full backdrop-blur-sm">
           {menu.category?.name}
-        </div> */}
+        </div>
       </div>
 
       <CardHeader className="pb-2 justify-center text-center">
