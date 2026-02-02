@@ -49,7 +49,6 @@ export async function deleteMenuImage(imageUrl: string): Promise<boolean> {
       return false;
     }
 
-    console.log("Image deleted successfully:", data);
     return true;
   } catch (error) {
     console.error("Error deleting image:", error);

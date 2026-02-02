@@ -49,9 +49,7 @@ export default function RegisterForm() {
       } else {
         setOpen({ isOpen: true, isSuccess: false });
       }
-      console.log("register = ", data);
     } catch (error) {
-      console.error("Register error:", error);
       setOpen({ isOpen: true, isSuccess: false });
     } finally {
       setLoading(false);

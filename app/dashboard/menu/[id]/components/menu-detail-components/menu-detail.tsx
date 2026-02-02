@@ -23,7 +23,7 @@ export function MenuDetail({ menuId }: { menuId: string }) {
       {/* Gambar */}
       <div className="h-64 md:h-full w-full relative bg-muted">
         <img
-          src={menu.imageUrl || "/fast-food.png"}
+          src={menu.imageUrl || "/gambar/fast-food.png"}
           alt={menu.name}
           className="absolute inset-0 w-full h-full object-cover"
         />

@@ -44,7 +44,7 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={session.data?.user?.image || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt={session.data?.user?.name || "dummy-photo"} />
+                <AvatarImage src={session.data?.user?.image || "/gambar/icon default.png"} alt={session.data?.user?.name || "dummy-photo"} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">

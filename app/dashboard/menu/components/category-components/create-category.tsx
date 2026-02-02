@@ -39,7 +39,6 @@ export default function CreateCategory({
       });
 
       if (res.ok) {
-        console.log("Kategori berhasil ditambahkan :", name, type);
         const createdCategoryName = name; // Save before reset
         setOpen(false); // Tutup dialog
         setName(""); // Reset input

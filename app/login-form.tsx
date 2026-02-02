@@ -44,17 +44,14 @@ export default function LoginForm() {
         ...payloadLogin,
         redirect: false,
       });
-      console.log({ ...payloadLogin });
       if (!result?.error) {
         await getSession();
         setOpen({ isOpen: true, isSuccess: true });
       } else {
-        console.log(result);
         setError("Password atau Email Salah");
         setOpen({ isOpen: true, isSuccess: false });
       }
     } catch (error) {
-      console.error("Login error:", error);
       setOpen({ isOpen: true, isSuccess: false });
     } finally {
       setLoading(false);
