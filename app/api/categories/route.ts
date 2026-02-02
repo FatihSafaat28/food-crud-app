@@ -17,7 +17,6 @@ export async function GET() {
       where: {
         userId: session.user.id,
       },
-      orderBy: [{ type: "asc" }, { name: "asc" }],
       // Opsional: Hitung berapa menu di tiap kategori
       include: {
         _count: {
@@ -25,7 +24,20 @@ export async function GET() {
         },
       },
     });
-    return NextResponse.json(categories);
+
+    // Sort: 1. Type "Makanan" first, 2. By menu count (descending)
+    const sortedCategories = categories.sort((a, b) => {
+      // First, prioritize "Makanan" type
+      if (a.type === "Makanan" && b.type !== "Makanan") return -1;
+      if (a.type !== "Makanan" && b.type === "Makanan") return 1;
+
+      // Then sort by menu count (descending - most menus first)
+      const countA = a._count?.menus || 0;
+      const countB = b._count?.menus || 0;
+      return countB - countA;
+    });
+
+    return NextResponse.json(sortedCategories);
   } catch (error) {
     return NextResponse.json(
       { error: "Gagal mengambil kategori" },

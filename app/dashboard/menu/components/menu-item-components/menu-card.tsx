@@ -21,7 +21,7 @@ export function MenuCard({ menu, onEdit, onDelete }: MenuCardProps) {
       {/* Image Container */}
       <div className="relative h-48 md:h-32 w-full overflow-hidden">
         <img
-          src={menu.imageUrl}
+          src={menu.imageUrl || "/placeholder-food.jpg"}
           alt={menu.name}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />

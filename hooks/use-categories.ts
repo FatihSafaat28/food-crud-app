@@ -3,11 +3,12 @@ import { Category } from "@/app/types";
 
 /**
  * Custom hook for fetching and managing category data
+ * @param initialData - Optional initial data from server-side rendering
  * @returns Category data, loading state, error state, and refetch function
  */
-export function useCategories() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useCategories(initialData?: Category[]) {
+  const [categories, setCategories] = useState<Category[]>(initialData || []);
+  const [isLoading, setIsLoading] = useState(!initialData);
   const [error, setError] = useState<string | null>(null);
 
   const fetchCategories = useCallback(async () => {
@@ -30,8 +31,11 @@ export function useCategories() {
   }, []);
 
   useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
+    // Only fetch if no initial data was provided
+    if (!initialData) {
+      fetchCategories();
+    }
+  }, [fetchCategories, initialData]);
 
   return {
     categories,

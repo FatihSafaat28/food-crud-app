@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useMenus } from "@/hooks/use-menus";
 import { Menu } from "@/app/types";
+import { useMenus } from "@/hooks/use-menus";
 import { MenuCard } from "@/app/dashboard/menu/components/menu-item-components/menu-card";
 import { MenuCardSkeleton } from "@/app/components/ui/loading-skeleton";
 import { EmptyState } from "@/app/components/ui/empty-state";
@@ -11,14 +11,18 @@ import { CreateMenuDialog } from "./create-menu-item";
 import { EditMenuDialog } from "./edit-menu-items";
 import { deleteMenuImage } from "@/app/lib/supabase-upload";
 
-export function MenuItems({ 
-  activeCategory,
-  onMenuChange 
-}: { 
+interface MenuItemsProps {
+  initialMenus?: Menu[];
   activeCategory: string;
   onMenuChange?: () => void;
-}) {
-  const { menus, isLoading, refetch } = useMenus();
+}
+
+export function MenuItems({ 
+  initialMenus,
+  activeCategory,
+  onMenuChange 
+}: MenuItemsProps) {
+  const { menus, isLoading, refetch } = useMenus(initialMenus);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<Menu | null>(null);
   const [editingItem, setEditingItem] = useState<Menu | null>(null);

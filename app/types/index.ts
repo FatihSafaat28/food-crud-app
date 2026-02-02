@@ -3,7 +3,8 @@
 export interface Category {
   id: number;
   name: string;
-  userId: number;
+  type: string;
+  userId: string;
   createdAt: Date;
   updatedAt: Date;
   _count?: {
@@ -16,10 +17,10 @@ export interface Menu {
   name: string;
   price: number;
   description: string | null;
-  imageUrl: string;
+  imageUrl: string | null;
   ingredients: string[];
   categoryId: number;
-  userId: number;
+  userId: string;
   createdAt: Date;
   updatedAt: Date;
   category?: Category;

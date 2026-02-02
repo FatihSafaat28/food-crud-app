@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { Category } from "@/app/types";
 import { useCategories } from "@/hooks/use-categories";
 import { CategoryCard } from "@/app/dashboard/menu/components/category-components/category-card";
 import { CategoryCardSkeleton } from "@/app/components/ui/loading-skeleton";
@@ -9,17 +10,19 @@ import CreateCategory from "./create-category";
 import { EditCategory } from "./edit-category";
 
 interface MenuCategoryProps {
+  initialCategories?: Category[];
   activeCategory: string;
   setActiveCategory: (category: string) => void;
   onRefetchReady?: (refetch: () => void) => void;
 }
 
 export function MenuCategory({
+  initialCategories,
   activeCategory,
   setActiveCategory,
   onRefetchReady,
 }: MenuCategoryProps) {
-  const { categories, isLoading, refetch } = useCategories();
+  const { categories, isLoading, refetch } = useCategories(initialCategories);
 
   // Set first category as active when categories load
   useEffect(() => {

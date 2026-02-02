@@ -3,11 +3,12 @@ import { Menu } from "@/app/types";
 
 /**
  * Custom hook for fetching and managing menu data
+ * @param initialData - Optional initial data from server-side rendering
  * @returns Menu data, loading state, error state, and refetch function
  */
-export function useMenus() {
-  const [menus, setMenus] = useState<Menu[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useMenus(initialData?: Menu[]) {
+  const [menus, setMenus] = useState<Menu[]>(initialData || []);
+  const [isLoading, setIsLoading] = useState(!initialData);
   const [error, setError] = useState<string | null>(null);
 
   const fetchMenus = useCallback(async () => {
@@ -30,8 +31,11 @@ export function useMenus() {
   }, []);
 
   useEffect(() => {
-    fetchMenus();
-  }, [fetchMenus]);
+    // Only fetch if no initial data was provided
+    if (!initialData) {
+      fetchMenus();
+    }
+  }, [fetchMenus, initialData]);
 
   return {
     menus,
