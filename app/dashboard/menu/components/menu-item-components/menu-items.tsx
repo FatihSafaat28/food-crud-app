@@ -69,7 +69,7 @@ export function MenuItems({
         />
       </div>
 
-      <div className="flex gap-4 w-full px-6 py-4 border rounded-4xl flex-wrap">
+      <div className="flex gap-4 w-full px-6 py-4 border rounded-4xl flex-wrap bg-sidebar">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full">
           {isLoading ? (
             <MenuCardSkeleton count={5} />

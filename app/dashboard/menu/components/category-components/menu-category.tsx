@@ -48,7 +48,7 @@ export function MenuCategory({
         />
       </div>
 
-      <div className="grid grid-cols-3 md:flex md:flex-wrap gap-4 w-full px-6 py-4 border rounded-4xl">
+      <div className="grid grid-cols-3 md:flex md:flex-wrap gap-4 w-full px-6 py-4 border rounded-4xl bg-sidebar">
         {isLoading ? (
           <CategoryCardSkeleton count={5} />
         ) : categories.length === 0 ? (

@@ -78,13 +78,13 @@ export function EditCategory({
       {/* --- DIALOG UTAMA: PILIH KATEGORI --- */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm" className="gap-2 cursor-pointer">
-            <Settings2 className="h-4 w-4" /> Manage Categories
+          <Button variant="outline" size="sm" className="gap-2 cursor-pointer" aria-label="Edit or Delete Category">
+            <Settings2 className="h-4 w-4" /> Kelola Kategori
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-100">
           <DialogHeader>
-            <DialogTitle>Manage Categories</DialogTitle>
+            <DialogTitle>Kelola Kategori</DialogTitle>
           </DialogHeader>
 
           <div className="py-4 space-y-4">
@@ -117,16 +117,18 @@ export function EditCategory({
                   setNewName(selectedCategory?.name || "");
                   setIsEditDialogOpen(true);
                 }}
+                aria-label="Ubah Kategori"
               >
-                <Edit3 className="h-4 w-4" /> Edit
+                <Edit3 className="h-4 w-4" /> Ubah Kategori
               </Button>
               <Button
-                className="flex-1 gap-2 cursor-pointer text-destructive"
+                className="flex-1 gap-2 cursor-pointer text-destructive border-red-400 hover:text-destructive hover:bg-red-50"
                 variant="outline"
                 disabled={!selectedId}
                 onClick={() => setIsDeleteDialogOpen(true)}
+                aria-label="Hapus Kategori"
               >
-                <Trash2 className="h-4 w-4" /> Delete
+                <Trash2 className="h-4 w-4" /> Hapus
               </Button>
             </div>
           </div>

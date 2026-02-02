@@ -92,13 +92,13 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="gap-2 cursor-pointer">
-          <Plus className="h-4 w-4" /> Add Menu
+        <Button className="gap-2 cursor-pointer" aria-label="Tambah Menu Baru">
+          <Plus className="h-4 w-4" /> Tambah Menu Baru
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
-          <DialogTitle>Create New Menu</DialogTitle>
+          <DialogTitle>Tambah Menu Baru</DialogTitle>
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
@@ -170,11 +170,12 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
+          <Button variant="outline" className="cursor-pointer" onClick={() => setOpen(false)} aria-label="Batal">
+            Batal
           </Button>
           <Button
             onClick={handleSave}
+            className="cursor-pointer"
             disabled={
               loading ||
               !name ||
@@ -184,11 +185,12 @@ export function CreateMenuDialog({ onRefresh }: { onRefresh: () => void }) {
               !ingredients ||
               !description
             }
+            aria-label="Simpan Menu"
           >
             {loading ? (
               <Loader2 className="animate-spin mr-2 h-4 w-4" />
             ) : (
-              "Save Menu"
+              "Simpan Menu"
             )}
           </Button>
         </DialogFooter>

@@ -60,12 +60,13 @@ export default function CreateCategory({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
+          aria-label="Add New Category"
           variant="default"
           size="sm"
           className="flex gap-2 cursor-pointer"
         >
           <PlusIcon className="h-4 w-4" />
-          <span className="hidden lg:inline">Add Menu Category</span>
+          <span className="hidden lg:inline">Tambah Kategori</span>
         </Button>
       </DialogTrigger>
 
@@ -117,7 +118,8 @@ export default function CreateCategory({
           <Button
             onClick={handleSubmit}
             disabled={createCategoryLoading || !name || !type}
-            className="w-full"
+            className="w-full cursor-pointer"
+            aria-label="Save Category"
           >
             {createCategoryLoading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
