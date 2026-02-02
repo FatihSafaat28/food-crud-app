@@ -1,6 +1,6 @@
 
 import { render, screen } from "@testing-library/react";
-import LoginForm from "@/app/components/login-form";
+import LoginForm from "@/app/login-form";
 
 jest.mock('next-auth/react', () => ({
   signIn: jest.fn(),

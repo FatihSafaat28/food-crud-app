@@ -1,10 +1,10 @@
-import RegisterForm from "@/app/components/register-form";
-import LoginLayout from "@/app/components/login-layout";
+import RegisterForm from "@/app/register/register-form";
+import RegisterLayout from "@/app/register/register-layout";
 import Link from "next/link";
 
 export default function RegisterPage() {
   return (
-    <LoginLayout isStatus="register">
+    <RegisterLayout>
       <div className="flex justify-center gap-1 text-gray-500">
         <span>Already have an account?</span>
         <Link
@@ -15,6 +15,6 @@ export default function RegisterPage() {
         </Link>
       </div>
       <RegisterForm />
-    </LoginLayout>
+    </RegisterLayout>
   );
 }

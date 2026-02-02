@@ -1,10 +1,10 @@
-import LoginForm from "@/app/components/login-form";
-import LoginLayout from "@/app/components/login-layout";
+import LoginForm from "@/app/login-form";
+import LoginLayout from "@/app/login-layout";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <LoginLayout isStatus="login">
+    <LoginLayout>
       <div className="flex justify-center gap-1 text-gray-500">
         <span>Don't have an account?</span>
         <Link

@@ -1,5 +1,5 @@
 "use client";
-import { Eye, EyeOff } from "lucide-react";
+import dynamic from "next/dynamic";
 import { Button } from "@/app/components/ui/button";
 import {
   AlertDialog,
@@ -14,44 +14,47 @@ import { Field, FieldLabel } from "@/app/components/ui/field";
 import { Input } from "@/app/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getSession, signIn } from "next-auth/react";
 import { Spinner } from "@/app/components/ui/spinner";
 
-export default function RegisterForm() {
+// Dynamic imports for icons to reduce initial bundle size
+const Eye = dynamic(() => import("lucide-react").then((mod) => mod.Eye), {
+  ssr: false,
+});
+const EyeOff = dynamic(() => import("lucide-react").then((mod) => mod.EyeOff), {
+  ssr: false,
+});
+
+export default function LoginForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [registerData, setRegisterData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [open, setOpen] = useState({ isOpen: false, isSuccess: false });
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  const submitRegister = async () => {
+  const submitLogin = async () => {
     setLoading(true);
     try {
-      const payloadRegister = {
-        name: registerData.name,
-        email: registerData.email,
-        password: registerData.password,
+      const payloadLogin = {
+        email: loginData.email,
+        password: loginData.password,
       };
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadRegister),
+      const result = await signIn("credentials", {
+        ...payloadLogin,
+        redirect: false,
       });
-      const data = await response.json();
-
-      if (data.status === 201) {
+      console.log({ ...payloadLogin });
+      if (!result?.error) {
+        await getSession();
         setOpen({ isOpen: true, isSuccess: true });
       } else {
+        console.log(result);
+        setError("Password atau Email Salah");
         setOpen({ isOpen: true, isSuccess: false });
       }
-      console.log("register = ", data);
     } catch (error) {
-      console.error("Register error:", error);
+      console.error("Login error:", error);
       setOpen({ isOpen: true, isSuccess: false });
     } finally {
       setLoading(false);
@@ -60,27 +63,11 @@ export default function RegisterForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitRegister();
+    submitLogin();
   };
 
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-      <Field>
-        <FieldLabel className="dark:text-white" htmlFor="name">
-          Nama
-        </FieldLabel>
-        <Input
-          className="dark:text-white"
-          id="name"
-          type="text"
-          placeholder="your name"
-          value={registerData.name}
-          onChange={(e) => {
-            setRegisterData({ ...registerData, name: e.target.value });
-          }}
-          required
-        />
-      </Field>
       <Field>
         <FieldLabel className="dark:text-white" htmlFor="email">
           Email
@@ -90,9 +77,9 @@ export default function RegisterForm() {
           id="email"
           type="email"
           placeholder="example@mail.com"
-          value={registerData.email}
+          value={loginData.email}
           onChange={(e) => {
-            setRegisterData({ ...registerData, email: e.target.value });
+            setLoginData({ ...loginData, email: e.target.value });
           }}
           required
         />
@@ -107,24 +94,26 @@ export default function RegisterForm() {
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="your password"
-            value={registerData.password}
+            value={loginData.password}
             onChange={(e) => {
-              setRegisterData({ ...registerData, password: e.target.value });
+              setLoginData({ ...loginData, password: e.target.value });
             }}
             required
           />
-          <button
+          <Button
             type="button"
+            variant="ghost"
             onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
             className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200"
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-          </button>
+          </Button>
         </div>
       </Field>
       <Field>
-        <Button className="cursor-pointer font-bold" type="submit">
-          {loading ? <Spinner /> : "Register"}
+        <Button className="cursor-pointer font-bold" type="submit" aria-label="Login">
+          {loading ? <Spinner /> : "Login"}
         </Button>
       </Field>
       <AlertDialog
@@ -134,21 +123,22 @@ export default function RegisterForm() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {open.isSuccess ? "Register Success" : "Register Failed"}
+              {open.isSuccess ? "Login Success" : "Login Failed"}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {open.isSuccess
-                ? "Please press Continue to Sign-in"
-                : "Sign-up failed. Your email or password is incorrect. Please try again."}
+                ? "Please press Continue to the homepage."
+                : "Sign-in failed. Your email or password is incorrect. Please try again."}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction
+              aria-label={open.isSuccess ? "Continue to the homepage" : "Try Again"}
               className="cursor-pointer"
               onClick={() => {
                 if (open.isSuccess) {
-                  router.push("/");
-                  setRegisterData({ name: "", email: "", password: "" });
+                  router.push("/dashboard/menu");
+                  router.refresh();
                 } else {
                   setOpen({ ...open, isOpen: false });
                 }

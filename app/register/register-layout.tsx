@@ -2,12 +2,10 @@ import { FieldGroup } from "@/app/components/ui/field";
 import { Coffee } from "lucide-react";
 import React from "react";
 
-export default function LoginLayout({
+export default function RegisterLayout({
   children,
-  isStatus,
 }: {
   children: React.ReactNode;
-  isStatus: string;
 }) {
   return (
     <main>
@@ -23,9 +21,7 @@ export default function LoginLayout({
                     <span className="sr-only">My Coffee</span>
                   </div>
                   <h1 className="text-xl font-bold dark:text-white">
-                    {isStatus === "login"
-                      ? "Welcome to My Coffee"
-                      : "Create your new account"}
+                    Create New Account
                   </h1>
                 </div>
                 {children}
