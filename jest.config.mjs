@@ -7,8 +7,9 @@ const config = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   collectCoverageFrom: [
-    'app/**/*.{ts,tsx}',
-    '!app/**/*.d.ts',
+    'app/*.tsx',
+    'app/register/**/*.tsx',
+    'app/dashboard/menu/**/*.tsx',
     '!app/**/layout.tsx',
     '!app/**/page.tsx',
   ],

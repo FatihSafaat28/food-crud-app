@@ -169,11 +169,16 @@ export function EditForm({ menuId, onUpdate }: EditFormProps) {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label>Nama Menu</Label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+            <Input
+              data-testid="edit-nama-menu"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div className="space-y-2">
             <Label>Harga</Label>
             <Input
+              data-testid="edit-harga"
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
