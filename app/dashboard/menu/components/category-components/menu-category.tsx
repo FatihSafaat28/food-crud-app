@@ -6,7 +6,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { CategoryCard } from "@/app/dashboard/menu/components/category-components/category-card";
 import { CategoryCardSkeleton } from "@/app/components/ui/loading-skeleton";
 import { EmptyState } from "@/app/components/ui/empty-state";
-import CreateCategory from "./create-category";
+import { CreateCategory } from "./create-category";
 import { EditCategory } from "./edit-category";
 
 interface MenuCategoryProps {

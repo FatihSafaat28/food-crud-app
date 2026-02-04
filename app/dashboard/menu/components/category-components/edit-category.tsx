@@ -78,7 +78,7 @@ export function EditCategory({
       {/* --- DIALOG UTAMA: PILIH KATEGORI --- */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm" className="gap-2 cursor-pointer" aria-label="Edit or Delete Category">
+          <Button data-testid="kelola-kategori" variant="outline" size="sm" className="gap-2 cursor-pointer" aria-label="Edit or Delete Category">
             <Settings2 className="h-4 w-4" /> Kelola Kategori
           </Button>
         </DialogTrigger>
@@ -91,7 +91,7 @@ export function EditCategory({
             <div className="space-y-2">
               <Label>Pilih Kategori</Label>
               <Select onValueChange={(val) => setSelectedId(val)}>
-                <SelectTrigger className="w-full cursor-pointer">
+                <SelectTrigger data-testid="select-category-trigger" className="w-full cursor-pointer">
                   <SelectValue placeholder="Pilih kategori yang ingin diubah..." />
                 </SelectTrigger>
                 <SelectContent>
@@ -110,11 +110,13 @@ export function EditCategory({
 
             <div className="flex gap-2 pt-2">
               <Button
+                data-testid="ubah-kategori-button"
                 className="flex-1 gap-2 cursor-pointer"
                 variant="default"
                 disabled={!selectedId}
                 onClick={() => {
                   setNewName(selectedCategory?.name || "");
+                  setNewType(selectedCategory?.type || "");
                   setIsEditDialogOpen(true);
                 }}
                 aria-label="Ubah Kategori"
@@ -122,6 +124,7 @@ export function EditCategory({
                 <Edit3 className="h-4 w-4" /> Ubah Kategori
               </Button>
               <Button
+                data-testid="hapus-kategori-button"
                 className="flex-1 gap-2 cursor-pointer text-destructive border-red-400 hover:text-destructive hover:bg-red-50"
                 variant="outline"
                 disabled={!selectedId}
@@ -146,6 +149,7 @@ export function EditCategory({
             <div className="space-y-2">
               <Label>Nama Kategori</Label>
               <Input
+                data-testid="edit-category-name-input"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
               />
@@ -175,7 +179,7 @@ export function EditCategory({
             <Button variant="ghost" onClick={() => setIsEditDialogOpen(false)}>
               Batal
             </Button>
-            <Button onClick={handleUpdate} disabled={loading || !newName}>
+            <Button onClick={handleUpdate} disabled={loading || !newName} data-testid="simpan-perubahan">
               {loading ? (
                 <Loader2 className="animate-spin" />
               ) : (

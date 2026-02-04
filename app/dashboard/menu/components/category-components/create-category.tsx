@@ -15,7 +15,7 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
 
-export default function CreateCategory({
+export function CreateCategory({
   fetchCategories,
   onCategoryCreated,
 }: {
@@ -59,6 +59,7 @@ export default function CreateCategory({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
+          data-testid="add-category-button"
           aria-label="Add New Category"
           variant="default"
           size="sm"
@@ -115,6 +116,7 @@ export default function CreateCategory({
 
         <DialogFooter>
           <Button
+            data-testid="save-category-button"
             onClick={handleSubmit}
             disabled={createCategoryLoading || !name || !type}
             className="w-full cursor-pointer"

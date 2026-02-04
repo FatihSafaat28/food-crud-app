@@ -23,7 +23,6 @@ export function useCategories(initialData?: Category[]) {
       setCategories(data);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
-      console.error("Error fetching categories:", errorMessage);
       setError(errorMessage);
     } finally {
       setIsLoading(false);

@@ -2,10 +2,10 @@
 
 Aplikasi manajemen menu makanan menggunakan Next.js, Prisma, dan Supabase.
 
-## Login / Register response dengan bantuan API Reqres
+## Register/Login
 
-    Email : lindsay.ferguson@reqres.in
-    Password : [apa saja]
+    Email : example@mail
+    Password : your password
 
 ## Cara Menjalankan Aplikasi (Untuk Mentor/Developer Lain)
 
@@ -32,6 +32,7 @@ Lalu isi file `.env` dengan kredensial Supabase Anda sendiri (Database URL & API
 Jalankan perintah ini untuk membuat tabel di database Supabase Anda sesuai schema yang ada:
 
 ```bash
+npx prisma generate
 npx prisma db push
 ```
 
